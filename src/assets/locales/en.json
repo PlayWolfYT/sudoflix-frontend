@@ -155,7 +155,15 @@
       },
       "sectionTitle": "Search results",
       "discoverMore": "Discover more",
-      "discover": "Discover"
+      "discover": "Discover",
+      "discoverTitle": {
+        "default": "Discover new media",
+        "extra": [
+          "Find something new to watch!",
+          "Not sure what to watch?",
+          "Psst, over here!"
+        ]
+      }
     },
     "titles": {
       "day": {

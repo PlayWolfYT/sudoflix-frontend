@@ -40,6 +40,7 @@ export function HomePage() {
   const { t } = useTranslation();
   const { t: randomT } = useRandomTranslation();
   const emptyText = randomT(`home.search.empty`);
+  const discoverTitle = randomT("home.search.discoverTitle");
   const navigate = useNavigate();
   const [showBg, setShowBg] = useState<boolean>(false);
   const searchParams = useSearchQuery();
@@ -73,21 +74,22 @@ export function HomePage() {
           <SearchListPart searchQuery={search} />
         ) : (
           <>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-[18.5px] pb-3">
+                {showBookmarks || showWatching ? discoverTitle : emptyText}
+              </p>
+              <Button
+                className="px-py p-[0.35em] mt-3 rounded-xl text-type-dimmed box-content text-[18px] bg-largeCard-background text-buttons-secondaryText justify-center items-center"
+                onClick={() => handleClick("/discover")}
+              >
+                {t("home.search.discover")}
+              </Button>
+            </div>
+            <hr className="m-4 border-[var(--text-type-text)]" />
             <div className="flex flex-col gap-8">
               <BookmarksPart onItemsChange={setShowBookmarks} />
               <WatchingPart onItemsChange={setShowWatching} />
             </div>
-            {!(showBookmarks || showWatching) ? (
-              <div className="flex flex-col items-center justify-center">
-                <p className="text-[18.5px] pb-3">{emptyText}</p>
-                <Button
-                  className="px-py p-[0.35em] mt-3 rounded-xl text-type-dimmed box-content text-[18px] bg-largeCard-background text-buttons-secondaryText justify-center items-center"
-                  onClick={() => handleClick("/discover")}
-                >
-                  {t("home.search.discover")}
-                </Button>
-              </div>
-            ) : null}
           </>
         )}
       </WideContainer>
