@@ -14,21 +14,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
                   
-    - uses: pnpm/action-setup@v2
+    - uses: oven-sh/setup-bun@v2
       with:
-        version: 8
+        bun-version: latest
         
     - name: Install Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20
-        cache: 'pnpm'
     
-    - name: Install pnpm packages
-      run: pnpm install
+    - name: Install bun packages
+      run: bun install
     
     - name: Build project
-      run: pnpm run build:pwa
+      run: bun run build:pwa
 
     - name: Upload production-ready build files
       uses: actions/upload-artifact@v4
@@ -44,21 +43,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
                   
-    - uses: pnpm/action-setup@v2
+    - uses: oven-sh/setup-bun@v2
       with:
-        version: 8
+        bun-version: latest
     
     - name: Install Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20
-        cache: 'pnpm'
 
-    - name: Install pnpm packages
-      run: pnpm install
+    - name: Install bun packages
+      run: bun install
     
     - name: Build project
-      run: pnpm run build
+      run: bun run build
 
     - name: Upload production-ready build files
       uses: actions/upload-artifact@v4

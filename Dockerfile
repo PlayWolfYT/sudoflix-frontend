@@ -1,13 +1,25 @@
+# Use Node.js as a base image
 FROM node:20-alpine as build
+
+# Set the working directory inside the container
 WORKDIR /app
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
 
+# Install Bun
+RUN apk add curl \
+    && curl -fsSL https://bun.sh/install | bash \
+    && mv /root/.bun/bin/bun /usr/local/bin/bun
+
+# Add Bun to the PATH
+ENV PATH="/usr/local/bin:$PATH"
+
+# Copy package.json and lockfile for installation
 COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY bun.lockb ./
 
+# Install dependencies using Bun with caching
+RUN --mount=type=cache,id=bun,target=/root/.bun bun install --frozen-lockfile
+
+# Define build arguments
 ARG PWA_ENABLED="true"
 ARG GA_ID
 ARG APP_DOMAIN
@@ -25,6 +37,7 @@ ARG CDN_REPLACEMENTS
 ARG TURNSTILE_KEY
 ARG ALLOW_AUTOPLAY="false"
 
+# Set environment variables
 ENV VITE_PWA_ENABLED=${PWA_ENABLED}
 ENV VITE_GA_ID=${GA_ID}
 ENV VITE_APP_DOMAIN=${APP_DOMAIN}
@@ -42,11 +55,20 @@ ENV VITE_CDN_REPLACEMENTS=${CDN_REPLACEMENTS}
 ENV VITE_TURNSTILE_KEY=${TURNSTILE_KEY}
 ENV VITE_ALLOW_AUTOPLAY=${ALLOW_AUTOPLAY}
 
+# Copy all source code
 COPY . ./
-RUN pnpm run build
 
-# production environment
+# Run the build using Bun
+RUN bun run build
+
+# Production environment
 FROM nginx:stable-alpine
+
+# Copy built files from the build stage to the Nginx container
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Expose port 80 for the application
 EXPOSE 80
+
+# Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

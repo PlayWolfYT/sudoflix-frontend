@@ -31,8 +31,8 @@ Type the following commands into your terminal / command line to run Sudo-Flix l
 git clone https://github.com/sussy-code/smov.git
 cd smov
 git pull
-pnpm install
-pnpm run dev
+bun install
+bun run dev
 ```
 Then you can visit the local instance [here](http://localhost:5173) or, at local host on port 5173.
 
