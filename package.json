@@ -2,7 +2,7 @@
   "name": "sudo-flix",
   "version": "4.7.0",
   "private": true,
-  "homepage": "https://github.com/sussy-code/smov",
+  "homepage": "https://github.com/PlayWolfYT/sudoflix-frontend",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -34,7 +34,7 @@
     "@headlessui/react": "^1.7.19",
     "@ladjs/country-language": "^1.0.3",
     "@marsidev/react-turnstile": "^0.7.2",
-    "@movie-web/providers": "github:sussy-code/providers",
+    "@movie-web/providers": "github:playwolfyt/sudoflix-providers",
     "@noble/hashes": "^1.4.0",
     "@plasmohq/messaging": "^0.6.2",
     "@react-spring/web": "^9.7.4",
